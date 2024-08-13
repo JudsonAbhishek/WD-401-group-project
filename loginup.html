@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validated Login and Signup Forms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-image: url('https://cdn.glitch.global/87ca283e-148d-47b3-bbf5-83b18fee8074/login_blood.jpg?v=1723308244285');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Lucida Sans', sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            max-width: 1200px;
+            padding: 30px;
+            background-color: transparent;
+            border-radius: 10px;
+        }
+        .login-container, .signup-container {
+            width: 55%;
+            padding-left: 180px;
+            padding-top: 70px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            color: white;
+            background-color: transparent;
+            padding: 6px;
+            border-radius: 5px;
+            border: 3px solid white;
+            font-family: 'Lucida Sans', sans-serif;
+        }
+        form {
+            width: 100%;
+            padding: 15px;
+            border: 3px solid white;
+            border-radius: 8px;
+            background-color: transparent;
+            font-weight: bold;
+            color: white;
+        }
+        form .font { 
+            font-size: 24px;
+        }
+        form input,
+        form select {
+            height: 35px;
+            width: 100%;
+            padding: 0 8px;
+            font-size: 16px;
+            border: 2px solid darkred;
+            margin-top: 6px;
+            border-radius: 8px;
+            font-family: cursive;
+        }
+        form .font2 {
+            margin-top: 20px;
+        }
+        form button {
+            background-color: darkred; 
+            color: white;
+            margin: 20px 0 10px;
+            height: 35px;
+            border-radius: 8px;
+            width: 100%; 
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        form button:hover { 
+            background: white;
+            color: red;
+        }
+        form #email_error,
+        form #pass_error,
+        form #role_error {
+            border: 2px solid #EF9A9A; 
+            background: rgba(250, 0, 0, 0.1); 
+            text-align: center;
+            font-size: small;
+            padding: 4px 6px;
+            display: none;
+            margin-top: 6px;
+        }
+    </style>
+    <script>
+        function validateLogin() {
+            var email = document.forms["login_form"]["email"].value;
+            var password = document.forms["login_form"]["password"].value;
+            var role = document.forms["login_form"]["role"].value;
+            var email_error = document.getElementById("email_error");
+            var pass_error = document.getElementById("pass_error");
+            var role_error = document.getElementById("role_error");
+
+            email_error.style.display = "none";
+            pass_error.style.display = "none";
+            role_error.style.display = "none";
+
+            if (email == "") {
+                email_error.style.display = "block";
+                return false;
+            }
+            if (password == "") {
+                pass_error.style.display = "block";
+                return false;
+            }
+            if (role == "") {
+                role_error.style.display = "block";
+                return false;
+            }
+            return true;
+        }
+
+        function validateSignup() {
+            var email = document.forms["signup_form"]["email"].value;
+            var password = document.forms["signup_form"]["password"].value;
+            var name = document.forms["signup_form"]["name"].value;
+            var age = document.forms["signup_form"]["age"].value;
+            var r_pwd = document.forms["signup_form"]["r_pwd"].value;
+            var role = document.forms["signup_form"]["role"].value;
+            var email_error = document.getElementById("email_error");
+            var pass_error = document.getElementById("pass_error");
+            var role_error = document.getElementById("role_error");
+
+            email_error.style.display = "none";
+            pass_error.style.display = "none";
+            role_error.style.display = "none";
+
+            if (email == "" || password == "" || name == "" || age == "" || r_pwd == "" || role == "") {
+                email_error.style.display = "block";
+                return false;
+            }
+            if (password != r_pwd) {
+                pass_error.style.display = "block";
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <h1 class="header">USER LOGIN FORM</h1>
+            <form class="form" method="post" name="login_form" action="/login" onsubmit="return validateLogin()">
+                <div class="font">Email
+                </div><br>
+                <input type="text" name="email"><br>
+                <div id="email_error">Please fill up your Email correctly</div>
+                
+                <div class="font">Role</div><br>
+                <select name="role">
+                    <option value="">Select Role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select><br>
+                <div id="role_error">Please select your role</div>
+
+                <div class="font font2">Password</div><br>
+                <input type="password" name="password"><br>
+                <div id="pass_error">Please fill up your Password</div>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div class="signup-container">
+            <h1 class="header">USER SIGNUP FORM</h1>
+            <form class="form" method="post" name="signup_form" action="/signup" onsubmit="return validateSignup()">
+                <div class="font">Email</div><br>
+                <input type="text" name="email"><br>
+                <div id="email_error">Please fill up your Email correctly</div><br>
+
+                <div class="font">Name</div><br>
+                <input type="text" name="name"><br>
+                <div class="font font2">Age</div><br>
+                <input type="text" name="age"><br>
+                <div class="font font2">Password</div><br>
+                <input type="password" name="password"><br>
+                <div class="font font2">Re-Enter Password</div><br>
+                <input type="password" name="r_pwd"><br>
+                <br>
+                <div class="font">Role</div><br>
+                <select name="role">
+                    <option value="">Select Role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select><br>
+                <div id="role_error">Please select your role</div>
+                
+                <div id="pass_error">Please fill up your Password</div>
+                <button type="submit">Signup</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

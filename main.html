@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Portal - User Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            background-color: red; 
+            color: white;
+            width: 320px; 
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            text-align: center;
+            margin-bottom: 10px;
+            background-color:  #cc0000;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .sidebar a:hover {
+            background-color: #990000;
+        }
+        .container {
+            margin-left: 360px; 
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            height: 100vh;
+            overflow: auto; 
+        }
+        .form-section {
+            flex: 2; 
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-right: 20px; 
+            max-width: 1000px; 
+            width: 100%; 
+        }
+        .form-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px; 
+            text-align: center;
+            color: #cc0000;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #cc0000; 
+        }
+        .form-group input, .form-group select {
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ff3333;
+            width: 95%;
+            font-size: 16px;
+        }
+        .form-group button {
+            padding: 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #ff3333;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .form-group button:hover {
+            background-color: #cc0000;
+        }
+        .logout-button {
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .logout-button:hover {
+            background-color:  #cc0000;
+        }
+        .image-placeholder {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        #emergency-section, #quotes-section, #donar-advantages-section, #receiver-advantages-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #emergency-section {
+            background-color: #ffcccc;
+            border: 2px solid #cc0000;
+        }
+        #emergency-section h2 {
+            color: #cc0000;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        #emergency-message {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #quotes-section {
+            background-color: #f9f9f9;
+            border: 2px solid #ddd;
+        }
+        #quotes-section h2 {
+            color: #cc0000;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        #quotes-section p {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        #donar-advantages-section, #receiver-advantages-section {
+            background-color: #f4f4f4;
+            border: 2px solid #ddd;
+        }
+        #donar-advantages-section h2, #receiver-advantages-section h2 {
+            color: #cc0000;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        #donar-advantages-section p, #receiver-advantages-section p {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin-left: 0;
+                flex-direction: column;
+            }
+            .form-section {
+                margin-right: 0;
+                margin-bottom: 20px;
+                max-width: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Blood Donation Portal</h2>
+        <a href="#donor-section" onclick="showSection('donor-section')">Register as Donor</a>
+        <a href="#receiver-section" onclick="showSection('receiver-section')">Register as Receiver</a>
+        <a href="#donar-advantages-section" onclick="showSection('donar-advantages-section')">Benefits of Blood Donation</a>
+        <a href="#receiver-advantages-section" onclick="showSection('receiver-advantages-section')">Benefits for Blood Recipients</a>
+        <a href="#emergency-section" onclick="showSection('emergency-section')">Emergency Message</a>
+        <a href="#quotes-section" onclick="showSection('quotes-section')">Quotes on Blood</a>
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+    <div class="container">
+        <div id="donor-section" class="form-section section">
+            <h2>Register as Donor</h2>
+            <form action="/register-donor" method="post">
+                <div class="form-group">
+                    <label for="donor-name">Name:</label>
+                    <input type="text" id="donor-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="donor-location">Location:</label>
+                    <input type="text" id="donor-location" name="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="donor-blood-group">Blood Group:</label>
+                    <select id="donor-blood-group" name="blood_group" required>
+                        <option value="" disabled selected>Select Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="donor-contact">Contact:</label>
+                    <input type="text" id="donor-contact" name="contact" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Register Donor</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="receiver-section" class="form-section section">
+            <h2>Register as Receiver</h2>
+            <form action="/register-receiver" method="post">
+                <div class="form-group">
+                    <label for="receiver-name">Name:</label>
+                    <input type="text" id="receiver-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="receiver-location">Location:</label>
+                    <input type="text" id="receiver-location" name="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="receiver-blood-group">Blood Group Needed:</label>
+                    <select id="receiver-blood-group" name="blood_group" required>
+                        <option value="" disabled selected>Select Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="receiver-contact">Contact:</label>
+                    <input type="text" id="receiver-contact" name="contact" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Register Receiver</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="emergency-section" class="form-section section">
+            <h2>Emergency Message</h2>
+            <p id="emergency-message">Loading...</p>
+        </div>
+
+        <div id="quotes-section" class="form-section section">
+            <h2>Quotes to Inspire You</h2>
+            <p>"The gift of blood is the gift of life. There is no substitute for human blood." – Anonymous</p>
+            <p>"Blood donation costs you nothing but it can mean the world to someone in need." – Anonymous</p>
+            <p>"A single pint can save three lives, a single gesture can create a million smiles." – Anonymous</p>
+            <p>"Donate blood and be the reason for someone’s existence." – Anonymous</p>
+            <p>"Your blood can give a life to someone. Be a hero in someone's life." – Anonymous</p>
+            <p>"To give blood is to give the gift of life." – Anonymous</p>
+            <p>"The life you save may be your own." – Red Cross</p>
+            <p>"Donate blood, save a life, be a hero." – Anonymous</p>
+        </div>
+
+        <div id="donar-advantages-section" class="form-section section">
+            <h2>Benefits of Blood Donation</h2>
+            <p>Donating blood can help save lives and provides numerous health benefits for donors, including:</p>
+            <ul>
+                <li>Reduces the risk of certain cancers.</li>
+                <li>Helps to maintain healthy iron levels.</li>
+                <li>Enhances overall cardiovascular health.</li>
+                <li>Provides a sense of accomplishment and helps to build a community.</li>
+            </ul>
+        </div>
+
+        <div id="receiver-advantages-section" class="form-section section">
+            <h2>Benefits for Blood Recipients</h2>
+            <p>Blood recipients receive a range of benefits, including:</p>
+            <ul>
+                <li>Access to life-saving transfusions during surgeries or medical treatments.</li>
+                <li>Improved health outcomes for patients with chronic conditions.</li>
+                <li>Increased survival rates for those undergoing treatment for severe illnesses.</li>
+                <li>Enhanced quality of life for patients in critical condition.</li>
+            </ul>
+        </div>
+
+        <div class="image-placeholder">
+            <img src="https://cdn.glitch.global/87ca283e-148d-47b3-bbf5-83b18fee8074/faa5a3df-c885-4a60-a34b-dfb68367216a.img%20for%20hemogivers.jpg?v=1723305736152" alt="Blood Donation">
+        </div>
+    </div>
+    <script>
+        function showSection(sectionId) {
+            
+            var sections = document.querySelectorAll('.form-section');
+            sections.forEach(function(section) {
+                section.style.display = 'none';
+            });
+
+            
+            document.getElementById(sectionId).style.display = 'flex';
+        }
+
+        fetch('/get-admin-message')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('emergency-message').textContent = data.message;
+            });
+
+        
+        showSection('donor-section');
+    </script>
+</body>
+</html>
